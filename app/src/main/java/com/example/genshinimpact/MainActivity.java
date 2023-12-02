@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // TODO: 2023/12/2 提醒一下访问时前一个页面要提前做好数据库访问
         MyDatabaseHelper myHelper = new MyDatabaseHelper(MainActivity.this);
         try {
             myHelper.CopyDBFile();

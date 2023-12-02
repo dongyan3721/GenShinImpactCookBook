@@ -4,12 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +16,19 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        //接入SQLite获取数据
         String database_path = getDatabasePath("gen_shin.db").toString();
-        String name = null;
-        MembersAdapter adapter = new MembersAdapter(this, arrayOfMembers);
         SQLiteDatabase myDatabase = SQLiteDatabase.openDatabase(database_path, null, SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING);
+        // TODO: 2023/12/2 添加id查找
         List<detailData> detailDatas = findData.findData(myDatabase);
-        // Attach the adapter to a ListView
+
+        //注册链接Adapter
+        MembersAdapter adapter = new MembersAdapter(this, arrayOfMembers);
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
-        // add members
+
+        //添加listview成员
         addMembers(detailDatas);
     }
     public void addMembers(List<detailData> detailDatas)

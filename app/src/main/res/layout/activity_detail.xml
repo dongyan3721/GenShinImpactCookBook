@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:src="?attr/actionModeCloseDrawable"
                 android:contentDescription="My button description"/>
-
+            <!--后面改成角色名称的显示-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -40,14 +40,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight="1.5">
+            android:layout_weight="1.5"
+            >
 
-
+            <!--根据上一个页面的反馈显示图片-->
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
-                android:src="@drawable/ic_launcher_background" />
+                android:src="@drawable/xiao"
+                 />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -68,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="背景故事" />
+                    android:text="属性信息" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

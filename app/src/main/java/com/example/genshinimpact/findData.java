@@ -9,18 +9,18 @@ import java.util.List;
 
 public class findData {
     @SuppressLint("Range")
+    // TODO: 2023/12/2 添加名字查询
     public static List findData(SQLiteDatabase db){
-        String tablename = "天赋表";
         String query = "SELECT * FROM 天赋表 WHERE 天赋持有人 = ?";
 
-// 定义查询参数
-        String[] selectionArgs = {"芙宁娜"};
+    //修改
+        String[] selectionArgs = {"魈"};
 
-// 执行查询操作
+        // 执行查询操作
         Cursor cursor = db.rawQuery(query, selectionArgs);
         List<detailData> detailDatas = new ArrayList<>();
 
-// 遍历结果
+        // 遍历结果
         if (cursor.moveToFirst()) {
             do {
                 detailData detailData = new detailData();
@@ -33,7 +33,9 @@ public class findData {
         }
 
 
-// 关闭游标和数据库连接
+        // 关闭游标和数据库连接
+        cursor.close();
+        db.close();
 
         return detailDatas;
     }
