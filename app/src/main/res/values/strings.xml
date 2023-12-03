@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="goto_previous">上一页</string>
+    <string name="goto_next">下一页</string>
+    <string name="goto_determined">跳转指定页面</string>
+    <string name="comment_page_input_hint">请输入页码</string>
+    <string name="add_comment_string">在这里发表你的看法...</string>
+    <string name="submit_comment">提交</string>
 </resources>
