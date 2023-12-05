@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
+    private EditText editTextMessage;
+    private Button buttonSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +26,23 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        editTextMessage = findViewById(R.id.editTextMessage);
+        buttonSend = findViewById(R.id.buttonSend);
+
+        buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 读取EditText中的文本
+                String message = editTextMessage.getText().toString();
+                // 创建Intent以启动新的Activity
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                // 将数据放入Intent
+                intent.putExtra("id", message);
+                // 启动SecondActivity
+                startActivity(intent);
+            }
+        });
     }
-    public void turntopic(View view){
-        Intent intentt = new Intent();
-        intentt.setClass(MainActivity.this,DetailActivity.class);
-        startActivity(intentt);
-    }
+
 
 }

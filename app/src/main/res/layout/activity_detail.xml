@@ -51,6 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:layout_margin="2sp"
                 android:src="@drawable/xiao"
                  />
 
@@ -58,36 +59,29 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="4">
+                android:layout_weight="5">
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_margin="2sp"
                     android:text="发电区" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.1" />
+
                 <Button
                     android:id="@+id/check"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_margin="2sp"
                     android:text="属性信息" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.1"/>
+
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:layout_margin="2sp"
                     android:text="二创工坊" />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.1" />
             </LinearLayout>
         </LinearLayout>
         <!--技能介绍-->
@@ -98,7 +92,8 @@
             android:orientation="horizontal"
             android:layout_weight="4"
             android:visibility="gone"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:background="#E6DDFF">
 
             <ListView
                 android:id="@+id/list_view"
@@ -131,7 +126,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="称号+全名"
-                    android:textSize="30sp" />
+                    android:textSize="28sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

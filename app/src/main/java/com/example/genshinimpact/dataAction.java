@@ -10,11 +10,11 @@ import java.util.List;
 public class dataAction {
     @SuppressLint("Range")
     // TODO: 2023/12/2 添加名字查询
-    public static List findData(SQLiteDatabase db){
+    public static List findData(SQLiteDatabase db,String id){
         String query1 = "SELECT * FROM 天赋表 WHERE 天赋持有人 = ?";
 
     //修改
-        String[] selectionArgs = {"魈"};
+        String[] selectionArgs = {id};
 
         // 执行查询操作
         Cursor cursor1 = db.rawQuery(query1, selectionArgs); //技能查询
@@ -40,10 +40,10 @@ public class dataAction {
     }
 
     @SuppressLint("Range")
-    public static characterData findAttribute(SQLiteDatabase db){
+    public static characterData findAttribute(SQLiteDatabase db,String id){
         String query2 = "SELECT * FROM 角色基础信息表 WHERE 姓名 = ?";
         //修改
-        String[] selectionArgs = {"魈"};
+        String[] selectionArgs = {id};
 
         // 执行查询操作
         Cursor cursor2 = db.rawQuery(query2,selectionArgs); //详细查询
