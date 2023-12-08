@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.myapplication.adapter.CommentsAdapter;
+import com.example.myapplication.config.LoginConfig;
+import com.example.myapplication.config.TokenConfig;
 import com.example.myapplication.entity.Comments;
 import com.example.myapplication.entity.CommentsQueryEntity;
 import com.example.myapplication.entity.extend_for_listview.CommentsListViewItem;
@@ -137,8 +139,8 @@ public class CommentsActivity extends AppCompatActivity {
                 Toast.makeText(this, "评论不能为空O.o", Toast.LENGTH_SHORT).show();
             }else{
                 Comments comments = new Comments();
-                comments.setAdder("是是是");
-                comments.setAddress("后台设置");
+                comments.setAdder(LoginConfig.loginUser.getNickName());
+                comments.setAddress("transfer-to-backend");
                 comments.setRoleName(queryRoleName);
                 comments.setContent(exact);
                 new SubmitNewComment(comments, pageNum).start();
@@ -159,7 +161,7 @@ public class CommentsActivity extends AppCompatActivity {
         queryEntity.setPageNum(newPageNum);
         pageNum = newPageNum;
         // 写一个类往里面的静态成员写token
-        String token = "";
+        String token = TokenConfig.token;
         Response response;
         try {
             response = HttpManager.sendSyncPostRequest(REQUEST_URL, queryEntity, token);

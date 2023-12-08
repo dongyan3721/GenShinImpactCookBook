@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.blankj.utilcode.util.ToastUtils;
+import com.example.myapplication.config.LoginConfig;
+import com.example.myapplication.config.TokenConfig;
 import com.example.myapplication.entity.User;
 import com.example.myapplication.utils.HttpManager;
 import com.example.myapplication.utils.RSAUtil;
@@ -160,6 +162,9 @@ public class LogInActivity extends AppCompatActivity {
                 JSONObject jsonObject = JSON.parseObject(resp);
                 System.out.println(jsonObject);
                 if(jsonObject.getInteger("code")==200){
+                    // 把这次登录拿到的token放进到配置中
+                    TokenConfig.token = jsonObject.getString("token");
+                    LoginConfig.loginUser = (User)jsonObject.get("user");
                     Intent intent = new Intent(LogInActivity.this, SecondActivity.class);
                     ToastUtils.showShort("登录成功，即将跳转");
                     try {
