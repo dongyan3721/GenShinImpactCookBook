@@ -11,6 +11,7 @@
     </data>
 
     <RelativeLayout
+        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -36,13 +37,17 @@
                 android:text="@{Role.name}"
                 />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_star"
+        <per.wsj.library.AndRatingBar
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            bind:starImg="@{Role.starImg}"
-            />
+            android:layout_height="48dp"
+            app:starDrawable="@drawable/baseline_star_24"
+           android:layout_centerHorizontal="true"
+            app:starColor="@color/yellow"
+            app:starSpacing="1dp"
+            app:scaleFactor="0.3"
+            android:numStars="@{Integer.parseInt(Role.star)}"
+            android:rating="@{Integer.parseInt(Role.star)}"
+            android:isIndicator="true"
+            tools:ignore="MissingClass" />
     </RelativeLayout>
 </layout>

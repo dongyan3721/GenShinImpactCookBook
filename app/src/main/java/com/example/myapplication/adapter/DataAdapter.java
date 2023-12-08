@@ -52,7 +52,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.binding.setRole(items.get(position));
         holder.binding.executePendingBindings();
-//        holder.binding.getRoot().setOnClickListener(v ->  clickLisenter.OnItemOnclick(holder.binding, position,items.get(position)));
+        holder.binding.getRoot().setOnClickListener(v ->  clickLisenter.OnItemOnclick(holder.binding, position,items.get(position)));
     }
 
 

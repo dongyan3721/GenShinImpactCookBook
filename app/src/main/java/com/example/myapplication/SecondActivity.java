@@ -1,16 +1,22 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.myapplication.adapter.ConditionAdapter;
@@ -23,6 +29,8 @@ import com.example.myapplication.entity.Condition;
 import com.example.myapplication.entity.Role;
 import com.example.myapplication.model.RoleViewModel;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +42,10 @@ public class   SecondActivity extends AppCompatActivity implements View.OnClickL
 
     int conditionNumber=0;
     String conditionValue;
-    @SuppressLint("NotifyDataSetChanged")
+
+    List<Role> synthesisList=new ArrayList<>();
+
+    @SuppressLint({"NotifyDataSetChanged", "Range"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +54,51 @@ public class   SecondActivity extends AppCompatActivity implements View.OnClickL
         secondBinding.btStar.setOnClickListener(this);
         secondBinding.btSearch.setOnClickListener(this);
         secondBinding.btUp.setOnClickListener(this);
+
+
         init();
         roleViewModel = App.getAppViewModel(getApplication());
-        roleViewModel.getMutableLiveData(getApplicationContext()).observe(this, weathers -> {
-            adapter.setItems(weathers);
+        roleViewModel.getMutableLiveData(getApplicationContext()).observe(this, roles -> {
+            adapter.setItems(roles);
             adapter.notifyDataSetChanged();
         });
-        roleViewModel.loadData();
+
+        //接入SQLite获取数据
+        String database_path = getDatabasePath("gen_shin.db").toString();
+        SQLiteDatabase myDatabase = SQLiteDatabase.openDatabase(database_path, null, SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING);
+        try {
+            List<Role> data = roleViewModel.getData(myDatabase);
+            InputStream is = null;
+            for (Role item:data) {
+                is=getAssets().open(item.getImgStr().substring(2));
+                Bitmap bm= BitmapFactory.decodeStream(is);
+                Drawable da=new BitmapDrawable(getResources(),bm);
+                item.setImg(da);
+                Log.e("aa","aa"+item.getName()+item.getStar());
+                synthesisList.add(item);
+            }
+            assert is != null;
+            is.close();
+            roleViewModel.setMutableLiveData(synthesisList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
     public void init(){
         GridLayoutManager gridLayoutManager = new GridLayoutManager(SecondActivity.this, 3);
         gridLayoutManager.scrollToPosition(0);
         secondBinding.recyclerView.setLayoutManager(gridLayoutManager);
-
         adapter = new DataAdapter();
         secondBinding.recyclerView.setAdapter(adapter);
+        adapter.setOnItemOnclickLisenter(new DataAdapter.OnItemOnclickLisenter() {
+            @Override
+            public void OnItemOnclick(ItemDataBinding binding, int position, Role roleData) {
+                Intent intent=new Intent(SecondActivity.this,DetailActivity.class);
+                intent.putExtra("roleData",roleData.getName());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -67,8 +108,31 @@ public class   SecondActivity extends AppCompatActivity implements View.OnClickL
                 if(secondBinding.editView.getVisibility()==View.VISIBLE){
                     secondBinding.editView.setVisibility(View.GONE);
                     String s=secondBinding.editView.getText().toString();//编辑框输入的值必须跟角色名称、属性、性别、武器字体一致才能搜索到
-                    boolean b = roleViewModel.loadSearchData(s);
-                    if(!b){
+//                    boolean b = roleViewModel.loadSearchData(s);
+                    List<Role> searchList =new ArrayList<>();
+                    String database_path = getDatabasePath("gen_shin.db").toString();
+                    SQLiteDatabase myDatabase = SQLiteDatabase.openDatabase(database_path, null, SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING);
+                    try {
+                        searchList = roleViewModel.loadSearchData(myDatabase,s);
+                        InputStream is = null;
+                        // 图片资源解析
+                        for (Role item:searchList) {
+                            // 建表的时候添加了./前缀，这里去掉
+                            is=getAssets().open(item.getImgStr().substring(2));
+                            Bitmap bm= BitmapFactory.decodeStream(is);
+                            Drawable da=new BitmapDrawable(getResources(),bm);
+                            item.setImg(da);
+                            Log.e("aa","aa"+item.getName()+item.getStar());
+                            synthesisList.add(item);
+                        }
+                        assert is != null;
+                        is.close();
+                        roleViewModel.setMutableLiveData(searchList);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if(searchList==null){
                         ToastUtils.showShort("搜索不存在");
                     }
                 }else {
@@ -125,13 +189,14 @@ public class   SecondActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
                 if(!conditionValue.isEmpty() && conditionValue!=null){
                     if(conditionValue.equals("全部")){
-                        roleViewModel.loadData();
+//                        roleViewModel.loadData();
+                        roleViewModel.setMutableLiveData(synthesisList);
                     }else {
                         if(conditionNumber==1){
-                            roleViewModel.loadAttributeData(conditionValue);
+                            roleViewModel.loadAttributeData(synthesisList,conditionValue);
                         }
                         if(conditionNumber==2){
-                            roleViewModel.loadStarData(conditionValue);
+                            roleViewModel.loadStarData(synthesisList,conditionValue);
                         }
                     }
                     ToastUtils.showShort("确认");

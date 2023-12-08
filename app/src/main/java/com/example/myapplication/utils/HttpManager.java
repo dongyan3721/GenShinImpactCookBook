@@ -1,7 +1,6 @@
 package com.example.myapplication.utils;
 
 import com.alibaba.fastjson2.JSON;
-import com.example.myapplication.entity.User;
 
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -16,7 +15,10 @@ public class HttpManager {
 
     private static final String TEST_REQUEST_URL = "http://127.0.0.1:8080/user/register";
 
-    private static final OkHttpClient client = new OkHttpClient();
+    // 声明一个信任所有签名的访问客户端
+    private static final OkHttpClient client = SkipCertificateValidation.getUnsafeOkHttpClient();
+
+
 
     /**
      * 发送异步post请求
@@ -68,6 +70,7 @@ public class HttpManager {
         System.out.println(requestBody);
         Request request = new Request.Builder()
                 .url(url)
+                .header("Accept-Encoding", "identity")
                 .post(requestBody)
                 .build();
         return client.newCall(request).execute();
@@ -91,15 +94,5 @@ public class HttpManager {
         return client.newCall(request).execute();
     }
 
-    public static void testServerConnection() throws Exception {
-        User user = new User();
-        user.setRegisterEmail("18565826326@qq.com");
-        String encrypt = RSAUtil.encrypt("1556dewdw264.a");
-        user.setEncryptedPassword(encrypt);
-        System.out.println(encrypt);
-        Response response = sendSyncPostRequest(TEST_REQUEST_URL, user);
-        assert response.body() != null;
-        System.out.println(response.body().string());
-    }
 }
 

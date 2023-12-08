@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.myapplication.model.RoleViewModel;
+import com.example.myapplication.model.MySqliteOpenHelper;
+
+import java.io.IOException;
 
 
 public class App extends Application implements ViewModelStoreOwner {
@@ -17,6 +20,12 @@ public class App extends Application implements ViewModelStoreOwner {
     @Override
     public void onCreate() {
         super.onCreate();
+        MySqliteOpenHelper myHelper = new MySqliteOpenHelper(this);
+        try {
+            myHelper.CopyDBFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @NonNull
     @Override
@@ -42,4 +51,5 @@ public class App extends Application implements ViewModelStoreOwner {
     public static RoleViewModel getAppViewModel(Application application) {
         return ((App)application).getAppViewModelProvider().get(RoleViewModel.class);
     }
+
 }
