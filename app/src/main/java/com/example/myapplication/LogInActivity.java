@@ -1,7 +1,10 @@
 package com.example.myapplication;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -164,11 +167,19 @@ public class LogInActivity extends AppCompatActivity {
                 if(jsonObject.getInteger("code")==200){
                     // 把这次登录拿到的token放进到配置中
                     TokenConfig.token = jsonObject.getString("token");
-                    LoginConfig.loginUser = (User)jsonObject.get("user");
+                    LoginConfig.loginUser = JSON.parseObject(jsonObject.getJSONObject("user").toString(), User.class);
                     Intent intent = new Intent(LogInActivity.this, SecondActivity.class);
+                    SharedPreferences configuration = LogInActivity.this.getSharedPreferences("configuration", Context.MODE_PRIVATE);
+                    @SuppressLint("CommitPrefEdits") SharedPreferences.Editor edit = configuration.edit();
+                    edit.putString("token", jsonObject.getString("token"));
+                    edit.putInt("account", LoginConfig.loginUser.getAccount());
+                    edit.putString("email", LoginConfig.loginUser.getRegisterEmail());
+                    edit.putString("phone", LoginConfig.loginUser.getRegisterPhone());
+                    edit.putString("nickname", LoginConfig.loginUser.getNickName());
+                    edit.apply();
                     ToastUtils.showShort("登录成功，即将跳转");
                     try {
-                        Thread.sleep(2500);
+                        Thread.sleep(1500);
                         startActivity(intent);
                         finish();
                     } catch (InterruptedException e) {

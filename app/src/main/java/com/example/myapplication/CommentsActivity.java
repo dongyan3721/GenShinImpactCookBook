@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,13 +34,17 @@ import java.util.List;
 import okhttp3.Response;
 
 public class CommentsActivity extends AppCompatActivity {
+    private static final String TAG = "CommentsActivity";
     // 自定义的关闭遮罩层的数字
     private static final int CLOSE_DIALOG = 0X4656;
     private static final int START_LOADING = 0X4602;
 
-    private static final String REQUEST_URL = "http://127.0.0.1:8080/comments/get-commnets";
+    // 自定义更新ui得 数字
+    private static final int RENEW_UI = 0X7fd4;
 
-    private static final String ADD_URL = "http://127.0.0.1:8080/comments/add-commnet";
+    private static final String REQUEST_URL = "https://192.168.124.254:8080/comments/get-comments";
+
+    private static final String ADD_URL = "https://192.168.124.254:8080/comments/add-comment";
 
     // 当前查的第几页评论，一致写为每页50条
     private int pageNum;
@@ -56,6 +64,8 @@ public class CommentsActivity extends AppCompatActivity {
                 post(closeLoadingDialog);
             }else if(msg.what==START_LOADING){
                 post(startLoadingDialog);
+            }else if(msg.what==RENEW_UI){
+                renewUi();
             }
         }
     };
@@ -78,6 +88,13 @@ public class CommentsActivity extends AppCompatActivity {
         }
     };
 
+    // 更新ui
+    private void renewUi(){
+        commentsListView.setAdapter(new CommentsAdapter(CommentsActivity.this, R.layout.item_comments_layout, adapterContent));
+        ((EditText)findViewById(R.id.comments_page_num)).setText(String.valueOf(pageNum));
+        closeLoadingDialogHandler.sendEmptyMessage(CLOSE_DIALOG);
+    }
+
     // 遮罩层
     private ProgressDialog loadingDialog;
 
@@ -90,9 +107,9 @@ public class CommentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
         commentsListView = (ListView) findViewById(R.id.comments_list_view);
-        // Intent intent = getIntent();
+         Intent intent = getIntent();
         // 所有页面组合的时候把他打开
-        // this.queryRoleName = intent.getStringExtra("queryRoleName");
+         this.queryRoleName = intent.getStringExtra("queryRoleName");
         new AdapterContentAccess(1).start();
 
         EditText pageNumSelector = (EditText)findViewById(R.id.comments_page_num);
@@ -135,11 +152,12 @@ public class CommentsActivity extends AppCompatActivity {
 
         ((Button)findViewById(R.id.add_comment_button)).setOnClickListener(e->{
             String exact = addCommentInput.getText().toString().replace(" ", "");
+            addCommentInput.setText("");
             if(exact.equals("")){
                 Toast.makeText(this, "评论不能为空O.o", Toast.LENGTH_SHORT).show();
             }else{
                 Comments comments = new Comments();
-                comments.setAdder(LoginConfig.loginUser.getNickName());
+                comments.setAdder(this.getSharedPreferences("configuration", Context.MODE_PRIVATE).getString("nickname", "未知用户"));
                 comments.setAddress("transfer-to-backend");
                 comments.setRoleName(queryRoleName);
                 comments.setContent(exact);
@@ -149,19 +167,20 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     private void addComment(Comments comments) throws IOException {
-        String token = "";
+        String token = this.getSharedPreferences("configuration", Context.MODE_PRIVATE).getString("token", "");
         HttpManager.sendSyncPostRequest(ADD_URL, comments, token);
     }
 
     private void requestNewPage(int newPageNum) throws IOException {
         CommentsQueryEntity queryEntity = new CommentsQueryEntity();
         queryEntity.setEndNum(newPageNum*50);
-        queryEntity.setStartNum((pageNum-1)*50);
+        queryEntity.setStartNum((newPageNum-1)*50);
         queryEntity.setRoleName(queryRoleName);
         queryEntity.setPageNum(newPageNum);
         pageNum = newPageNum;
         // 写一个类往里面的静态成员写token
-        String token = TokenConfig.token;
+        SharedPreferences sf = this.getSharedPreferences("configuration", Context.MODE_PRIVATE);
+        String token = sf.getString("token", "");
         Response response;
         try {
             response = HttpManager.sendSyncPostRequest(REQUEST_URL, queryEntity, token);
@@ -171,6 +190,8 @@ public class CommentsActivity extends AppCompatActivity {
         assert response.body() != null;
         String jsonString = response.body().string();
         JSONObject obj = JSON.parseObject(jsonString);
+        Log.d(TAG, "requestNewPage: "+obj);
+        Log.d(TAG, "requestNewPage: "+token);
         total = obj.getInteger("total");
         List<Comments> rows = obj.getJSONArray("rows").toJavaList(Comments.class);
         adapterContent = new ArrayList<>();
@@ -184,7 +205,7 @@ public class CommentsActivity extends AppCompatActivity {
             viewItem.setRoleName(item.getRoleName());
             adapterContent.add(viewItem);
         });
-        ((EditText)findViewById(R.id.comments_page_num)).setText(String.valueOf(pageNum));
+
     }
 
     private class AdapterContentAccess extends Thread{
@@ -200,8 +221,7 @@ public class CommentsActivity extends AppCompatActivity {
             try {
                 closeLoadingDialogHandler.sendEmptyMessage(START_LOADING);
                 requestNewPage(newPageNum);
-                commentsListView.setAdapter(new CommentsAdapter(CommentsActivity.this, R.layout.item_comments_layout, adapterContent));
-                closeLoadingDialogHandler.sendEmptyMessage(CLOSE_DIALOG);
+                closeLoadingDialogHandler.sendEmptyMessage(RENEW_UI);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -225,8 +245,7 @@ public class CommentsActivity extends AppCompatActivity {
                 closeLoadingDialogHandler.sendEmptyMessage(START_LOADING);
                 addComment(comments);
                 requestNewPage(newPageNum);
-                commentsListView.setAdapter(new CommentsAdapter(CommentsActivity.this, R.layout.item_comments_layout, adapterContent));
-                closeLoadingDialogHandler.sendEmptyMessage(CLOSE_DIALOG);
+                closeLoadingDialogHandler.sendEmptyMessage(RENEW_UI);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

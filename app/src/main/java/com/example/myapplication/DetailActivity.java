@@ -42,6 +42,13 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         String role =  getIntent().getStringExtra("roleData");
 
+        // 跳转到评论区
+        ((Button)findViewById(R.id.goto_comment)).setOnClickListener(e->{
+            Intent intent = new Intent(this, CommentsActivity.class);
+            intent.putExtra("queryRoleName", role);
+            startActivity(intent);
+        });
+
         String database_path = getDatabasePath("gen_shin.db").toString();
         SQLiteDatabase myDatabase = SQLiteDatabase.openDatabase(database_path, null, SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING);
         List<detailData> detailDatas = dataAction.findData(myDatabase,role);
@@ -106,7 +113,7 @@ public class DetailActivity extends AppCompatActivity {
         for (detailData detailData:detailDatas
         ) {
            try {
-                InputStream is = getAssets().open(detailData.getPicUrl().substring(1));
+                InputStream is = getAssets().open(detailData.getPicUrl().substring(1).replace("png", "")+".png");
                 Bitmap bm = BitmapFactory.decodeStream(is);
                 Drawable da = new BitmapDrawable(getResources(), bm);
                 Members members = new Members(detailData.getPicUrl(), detailData.getTalentName(), detailData.getTalentDetail(),da);

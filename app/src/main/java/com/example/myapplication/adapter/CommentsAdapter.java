@@ -31,8 +31,8 @@ public class CommentsAdapter extends ArrayAdapter<CommentsListViewItem> {
         CommentsListViewItem item = getItem(position);
         @SuppressLint("ViewHolder") View view = LayoutInflater.from(getContext()).inflate(R.layout.item_comments_layout, parent, false);
         assert item != null;
-        ((TextView)view.findViewById(R.id.comments_address)).setText("ip属地"+item.getAddress());
-        ((TextView)view.findViewById(R.id.comments_adder)).setText("用户"+item.getAdder());
+        ((TextView)view.findViewById(R.id.comments_address)).setText("ip属地："+item.getAddress());
+        ((TextView)view.findViewById(R.id.comments_adder)).setText(item.getAdder());
         ((TextView)view.findViewById(R.id.comments_content)).setText(item.getContent());
         ((ImageView)view.findViewById(R.id.comments_user_icon)).setImageResource(item.getImgId());
         return view;
