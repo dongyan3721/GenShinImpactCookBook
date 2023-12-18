@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="Role"
+            type="com.android.example.primordialspirit.entity.Role" />
+    </data>
+
+    <RelativeLayout
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                tools:srcCompat="@tools:sample/avatars"
+                bind:img="@{Role.img}"
+                />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@{Role.name}"
+                />
+        </LinearLayout>
+        <per.wsj.library.AndRatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            app:starDrawable="@drawable/baseline_star_24"
+           android:layout_centerHorizontal="true"
+            app:starColor="@color/yellow"
+            app:starSpacing="1dp"
+            app:scaleFactor="0.3"
+            android:numStars="@{Integer.parseInt(Role.star)}"
+            android:rating="@{Integer.parseInt(Role.star)}"
+            android:isIndicator="true"/>
+    </RelativeLayout>
+</layout>
