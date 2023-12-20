@@ -47,6 +47,7 @@
             app:scaleFactor="0.3"
             android:numStars="@{Integer.parseInt(Role.star)}"
             android:rating="@{Integer.parseInt(Role.star)}"
-            android:isIndicator="true"/>
+            android:isIndicator="true"
+            tools:ignore="MissingClass" />
     </RelativeLayout>
 </layout>

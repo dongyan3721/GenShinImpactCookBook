@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">PrimordialSpirit</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -7,4 +6,14 @@
     <string name="title_person">Person</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">原神手册</string>
+    <string name="goto_previous">上一页</string>
+    <string name="goto_next">下一页</string>
+    <string name="goto_determined">跳转指定页面</string>
+    <string name="comment_page_input_hint">请输入页码</string>
+    <string name="add_comment_string">在这里发表你的看法...</string>
+    <string name="submit_comment">提交</string>
+    <string name="public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArv21X8y5+vL0PYTNAzxqZTsUTQzDiStxipxda5phU46WaIpMYmr9PR0KRavEBKEHVRsaw4hYU9WJoUJOIfdl8xSuYlVG0aBQK/gEarvhoJZz63lj/Qjn1xwR5SKQD/sxh/Iyl+XbRw4KYbPPXHGvCx7sv01CE01SzB8o7APCcAHkOmr9QH2gQtmH+Ew2ryZlwSKA2i1Tw6mdoTe5vrZaBpjM17497dI2rdMkN7WpzhEe4WYWn4YHfqYrhJEgMwi2A61ZPGyJi8KlpB2xK5NZLE495d+fwOGfeX1bCr3UkImK3s9YpzPPpvz/YpvRsnpEbKokovi6lqFS1cJR9NjI8QIDAQAB</string>
+    <string name="private_key">MIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCu/bVfzLn68vQ9hM0DPGplOxRNDMOJK3GKnF1rmmFTjpZoikxiav09HQpFq8QEoQdVGxrDiFhT1YmhQk4h92XzFK5iVUbRoFAr+ARqu+GglnPreWP9COfXHBHlIpAP+zGH8jKX5dtHDgphs89cca8LHuy/TUITTVLMHyjsA8JwAeQ6av1AfaBC2Yf4TDavJmXBIoDaLVPDqZ2hN7m+tloGmMzXvj3t0jat0yQ3tanOER7hZhafhgd+piuEkSAzCLYDrVk8bImLwqWkHbErk1ksTj3l35/A4Z95fVsKvdSQiYrez1inM8+m/P9im9GyekRsqiSi+LqWoVLVwlH02MjxAgMBAAECgf8BbHa5yz46kkNdiE6bNloI+20SpKM1r8D7zCqc/Tx5Bc7DJbOQcq007gXoYlOL+206J/qZGx21XbYKg420wItajt8Rky90U/YbnlQo/o/ItkomP/1guHbIPl2DHqr5uo/xNCJuJ1UGAAkD4GSCannqGbzuPzuFU4uvU3RcaUbEwBiWQxoaihhe2C6F2GV/rsZ3s3F6WoHCDsULf5O9FvwK6nHizXiMMHgKPTlwsi9j2OWJqoJ1AkObP1s8WxHEixQ3GDKgZtOlnH+5tVYOAMh712tzdSaVzLMupfsJNnndbVP72cT1xzK8WLkVfFvekznbSXC9DrSDVL+GgEWeeDsCgYEAx1DTj6xjRV3H79sHyB8sBKiLr8HSJS+FDZ+lOfC5t/iqS9ydsg9KHHPKKVYFzzpeB0H7PCbMJAuESzbj9z/hR00R+JeMMuKcsBy046pOq7uQtXbGpGm6u2OJobnZVm0uU0sq7PgrGfbjEm7wkxI6fcyvSC/wAChkMU49AifPwHsCgYEA4MHsvjA6eyXOfCUlGiG0lZSSN/NUWdXImrN53stqKn3JPfl/fb2n0E6fISzhB093BZHrF8RJjd56yyiwQ1ExQFUxM+D8v5j8mKNM71khdz5ici9cDk9mSgPgH/5PEmptr+0GQZAxB2acQjhQLKUz2eWJQeL2NeL6+oBkL8mqvoMCgYAntPJwrOcZ6pTqM7hZJdyfEPTDDtnOjqjzDdrcsBhPjjpe4pSH5IPfJzIfCgQeRIJ2764dTZ1dkO3KDiVcHF3E1pW98HL9sCeG7jEbKdKCY9twSzlHh8irjCjfDyc9EIMqFM94ZfgwM/8IrRFAO2Frrls9Bk/JuEI9kFiXFVdOAQKBgQC34M//9VMTByY8WONW0rZ8HdXWYoPjD00Ui7sr9D2CT/CBfIq6Y5xUhs4XhTEBGxkj/HJaumL250qMxVgXauihWlFrwSjm05HsisVZmBESDn7aLjbhGkJ0UWFeq18jkOD2KjORFheWl3NFle6559pY7TpzJe0Kvw1YPgw5MIM5YwKBgAgjUh49itu+VCW70MQNuZCoZoG9KLWwLXFxXOnzf8REbLytFDnKtcRlbWDBxU8lKM6QBgsA3ycygGLa+cwXBnt1Nt2xNtNR1xVZp9ciZBaLcBHctXway+mtQY+sEec5Jv01X1zMn0wdwa/QgIy83y8uglQVL2nSFtipmWcRAA8c</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>
