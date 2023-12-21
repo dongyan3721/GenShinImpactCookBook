@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/iconImageView"
+        android:layout_width="395dp"
+        android:layout_height="699dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/img" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="伤害计算器"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/inputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleTextView"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:background="@android:color/holo_blue_light">
+
+        <EditText
+            android:id="@+id/levelEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="角色等级"
+            android:background="@android:color/holo_blue_light"/>
+
+        <EditText
+            android:id="@+id/baseAttackEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="基础攻击力"
+            android:background="@android:color/holo_blue_light"/>
+
+        <EditText
+            android:id="@+id/equipmentAttackEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="装备攻击力"
+            android:background="@android:color/holo_blue_light"/>
+
+        <EditText
+            android:id="@+id/attackBonusEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="攻击力加成"
+            android:background="@android:color/holo_blue_light"/>
+
+        <EditText
+            android:id="@+id/criticalRateEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="暴击率"
+            android:background="@android:color/holo_blue_light"/>
+
+        <EditText
+            android:id="@+id/criticalDamageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="暴击伤害"
+            android:background="@android:color/holo_blue_light"/>
+
+        <Spinner
+            android:id="@+id/elementalReactionSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/holo_blue_light"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/totalDamageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputContainer"
+        android:layout_marginTop="32dp"
+        android:text=""
+        android:textSize="50sp"
+        android:textColor="#00FF66"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

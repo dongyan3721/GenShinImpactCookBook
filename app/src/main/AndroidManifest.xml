@@ -47,6 +47,7 @@
         </activity>
         <activity android:name=".CommentsActivity" android:exported="false"/>
         <activity android:name=".SignUpActivity" android:exported="false"/>
+        <activity android:name=".DamageCalcActivity" android:exported="false"/>
     </application>
 
 </manifest>

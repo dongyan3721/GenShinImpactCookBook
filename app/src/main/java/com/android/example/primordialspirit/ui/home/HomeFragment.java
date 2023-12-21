@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         init();
         roleViewModel = App.getAppViewModel(getActivity().getApplication());
-        roleViewModel.getMutableLiveData(requireContext()).observe(this, roles -> {
+        roleViewModel.getMutableLiveData(requireContext()).observe(getViewLifecycleOwner(), roles -> {
             adapter.setItems(roles);
             adapter.notifyDataSetChanged();
         });
